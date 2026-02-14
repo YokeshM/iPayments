@@ -8,7 +8,10 @@ public class StripeProcessor extends BaseProcessor implements IPaymentProcessor{
     }
 
     @Override
-    public void processPayment(double amount){
+    public void processPayment(double amount) throws PaymentException{
+        if (amount<=0){
+            throw new PaymentException("Invalid amount"+ amount);
+        }
         connectToAPI();
         System.out.println("Stripe:charging credit card for $"+ amount);
         logTransaction("Stripe", amount);
